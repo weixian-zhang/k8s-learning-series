@@ -1,0 +1,15 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "docker build booking",
+            "type": "shell",
+            "command": "docker build -t acrappsaks.azurecr.io/booking-service:v0.1.0 -f \"ops/Dockerfile\" .",
+            "options": {
+                "cwd": "${workspaceFolder}/src/booking_service/src"
+            }
+        }
+    ]
+}
