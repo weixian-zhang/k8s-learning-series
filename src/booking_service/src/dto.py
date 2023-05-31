@@ -2,7 +2,6 @@
 
 
 class Booking:
-    def __init__(self, name, age, description):
+    def __init__(self, name, skill):
         self.name = name
-        self.age = age
-        self.description = description
+        self.skill = skill

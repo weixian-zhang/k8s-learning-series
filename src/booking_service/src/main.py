@@ -1,6 +1,16 @@
 from flask import Flask
 import jsonpickle
 from dto import Booking
+from loguru import logger
+from dotenv import load_dotenv
+import os
+
+#load config from .env
+load_dotenv()
+
+logFilePath = os.getenv('log_file_path')
+
+logger.add(logFilePath, rotation="10 MB")  # Specify the log file path and rotation settings
 
 app = Flask(__name__)
 
@@ -14,11 +24,15 @@ def health():
 @app.route('/bookings')
 def list_bookings():
     bookings = [
-        Booking('Jane', 19, 'Jane is a good person'),
-        Booking('Heidi', 17, 'Heidi is a good person'),
-        Booking('Sonya', 18, 'Sonya is a good person'),
+        Booking('Pete', 'all sorts of repair work'),
+        Booking('Harry', 'all sorts of repair work'),
+        Booking('Sonya', 'all sorts of repair work'),
     ]
-    return jsonpickle.dumps(bookings, unpicklable=False)
+    bookingsJson = jsonpickle.dumps(bookings, unpicklable=False)
+    
+    logger.info(f'bookings: {bookingsJson}')
+    
+    return bookingsJson
 
 
 if __name__ == '__main__':
