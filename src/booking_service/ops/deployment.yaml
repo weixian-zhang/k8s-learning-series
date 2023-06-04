@@ -24,10 +24,10 @@ spec:
           claimName: pvc-azfile-logs
       containers:
       - name: app-booking-service
-        image: acrappsaks.azurecr.io/booking-service:v0.2.0
+        image: acrappsaks.azurecr.io/booking-service:v0.1.0
         imagePullPolicy: Always
         volumeMounts:
-          - mountPath: "/var/booking_service/logs"
+          - mountPath: "/app/logs"
             name: azfile-logs
             readOnly: false
         resources:
