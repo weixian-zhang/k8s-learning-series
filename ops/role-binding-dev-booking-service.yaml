@@ -1,0 +1,13 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: booking-service-role-binding
+  namespace: booking-service
+subjects:
+- kind: Group
+  namespace: booking-service
+  name: 3c923e6c-3016-4c1e-bcc3-8d9d9af9e600
+roleRef:
+  kind: Role
+  name: dev-users-booking-service
+  apiGroup: rbac.authorization.k8s.io

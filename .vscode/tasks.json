@@ -4,9 +4,17 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "docker build booking",
+            "label": "docker build booking service",
             "type": "shell",
-            "command": "docker build -t acrappsaks.azurecr.io/booking-service:v0.1.0 -f \"ops/Dockerfile\" .",
+            "command": "docker build -t acrappsaks.azurecr.io/booking-service:v0.1.0 .",
+            "options": {
+                "cwd": "${workspaceFolder}/src/booking_service/src"
+            }
+        },
+        {
+            "label": "docker push booking service",
+            "type": "shell",
+            "command": "docker push acrappsaks.azurecr.io/booking-service:v0.1.0",
             "options": {
                 "cwd": "${workspaceFolder}/src/booking_service/src"
             }
