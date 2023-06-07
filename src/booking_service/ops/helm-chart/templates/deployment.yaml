@@ -1,35 +1,49 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: deployment-booking-service
+  name: deployment-{{ .Release.Name }}
   namespace: booking-service
 spec:
-  replicas: 1
+  replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: app-booking-service
+      {{- range $v := .Values.deployment.matchLabels }}
+      {{ $v.key }}: {{ $v.value | quote }}
+      {{- end }}
   template:
     metadata:
       labels:
-        app: app-booking-service
+        {{- range $v := .Values.deployment.matchLabels }}
+        {{ $v.key }}: {{ $v.value | quote }}
+        {{- end }}
     spec:
       tolerations:
-        - key: "os"
-          operator: "Equal"
-          value: "linux"
-          effect: "NoSchedule"
+        {{- range $v := .Values.deployment.tolerations }}
+        - key: {{ $v.key | quote }}
+          operator: {{ $v.operator | quote }}
+          value: {{ $v.value | quote }}
+          effect: {{ $v.effect | quote }}
+        {{- end }}
+
       volumes:
-      - name: azfile-logs
+      {{- range $v := .Values.deployment.volumes }}
+      - name: {{ $v.name }}
         persistentVolumeClaim:
-          claimName: pvc-azfile-logs
+          claimName: {{ $v.persistentVolumeClaimName }}
+      {{- end }}
+
       containers:
-      - name: app-booking-service
-        image: acrappsaks.azurecr.io/booking-service:v0.1.0
-        imagePullPolicy: Always
+      - name: {{ .Values.deployment.container.name }}
+        image: {{ .Values.deployment.container.image}}:{{ .Values.deployment.container.tag }}
+        imagePullPolicy: {{ .Values.deployment.container.pullPolicy }}
+
         volumeMounts:
+          {{- range $v := .Values.deployment.container.volumeMounts }}
           - mountPath: "/app/logs"
             name: azfile-logs
             readOnly: false
+          {{- end }}
+
         resources:
           limits:
             memory: "128Mi"

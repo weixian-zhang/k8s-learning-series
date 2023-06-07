@@ -2,26 +2,35 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-replicaCount: 1
+namespace: booking-service
 
-image:
-  repository: nginx
-  pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+deployment:
+  replicaCount: 2
+  
+  matchLabels:
+    - key: 'app'
+      value: 'booking-service'
 
-imagePullSecrets: []
-nameOverride: ""
-fullnameOverride: ""
+  tolerations:
+    - key: "os"
+      operator: "Equal"
+      value: "linux"
+      effect: "NoSchedule"
 
-serviceAccount:
-  # Specifies whether a service account should be created
-  create: true
-  # Annotations to add to the service account
-  annotations: {}
-  # The name of the service account to use.
-  # If not set and create is true, a name is generated using the fullname template
-  name: ""
+  volumes:
+    - name: azfile-logs
+      persistentVolumeClaimName: pvc-azfile-logs
+
+  container:
+    name: "booking-service"
+    image: acrappsaks.azurecr.io/booking-service
+    pullPolicy: Always
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: "v0.1.0"
+    volumeMounts:
+      - name: azfile-logs
+        mountPath: "/app/logs"
+
 
 podAnnotations: {}
 
