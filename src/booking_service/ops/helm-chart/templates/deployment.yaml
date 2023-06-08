@@ -39,15 +39,15 @@ spec:
 
         volumeMounts:
           {{- range $v := .Values.deployment.container.volumeMounts }}
-          - mountPath: "/app/logs"
-            name: azfile-logs
+          - mountPath: {{ $v.mountPath }}
+            name: {{ $v.name }}
             readOnly: false
           {{- end }}
 
         resources:
           limits:
-            memory: "128Mi"
-            cpu: "500m"
+            memory: {{ .Values.deployment.container.resources.limits.memory | quote }}
+            cpu: {{ .Values.deployment.container.resources.limits.cpu | quote }}
         ports:
-        - containerPort: 5000
+        - containerPort: {{ .Values.deployment.container.port }}
         

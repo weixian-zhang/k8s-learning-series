@@ -3,8 +3,8 @@ kind: PersistentVolume
 metadata:
   annotations:
     pv.kubernetes.io/provisioned-by: file.csi.azure.com
-  name: pv-azfile-logs
-  namespace: booking-service
+  name: {{ .Values.pvAzFileLog.name }}
+  namespace: {{ .Values.namespace }}
 spec:
   capacity:
     storage: 5Gi
@@ -17,11 +17,11 @@ spec:
     readOnly: false
     volumeHandle: fs-logs  # make sure this volumeid is unique for every identical share in the cluster
     volumeAttributes:
-      resourceGroup: rg-k8s-learning  # optional, only set this when storage account is not in the same resource group as node
-      shareName: fs-logs
+      resourceGroup: {{ .Values.pvAzFileLog.resourceGroup }}  # optional, only set this when storage account is not in the same resource group as node
+      shareName: {{ .Values.pvAzFileLog.shareName }}
     nodeStageSecretRef:
-      name: azure-storage-fileshare-log-accesskey
-      namespace: booking-service
+      name: {{ .Values.pvAzFileLog.secretRefName }}
+      namespace: {{ .Values.namespace }}
   mountOptions:
     - dir_mode=0777
     - file_mode=0777

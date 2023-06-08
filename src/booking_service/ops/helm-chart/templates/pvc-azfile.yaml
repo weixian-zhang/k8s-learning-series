@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: pvc-azfile-logs
-  namespace: booking-service
+  name: {{ .Values.pvcAzFileLog.name }}
+  namespace: {{ .Values.namespace }}
 spec:
   accessModes:
     - ReadWriteMany
   storageClassName: azurefile-csi
-  volumeName: pv-azfile-logs
+  volumeName: {{ .Values.pvAzFileLog.name }}
   resources:
     requests:
       storage: 5Gi
