@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-{{ .Release.Name }}
+  namespace: booking-service
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- range $v := .Values.deployment.matchLabels }}
+      {{ $v.key }}: {{ $v.value | quote }}
+      {{- end }}
+  template:
+    metadata:
+      labels:
+        {{- range $v := .Values.deployment.matchLabels }}
+        {{ $v.key }}: {{ $v.value | quote }}
+        {{- end }}
+    spec:
+      tolerations:
+        {{- range $v := .Values.deployment.tolerations }}
+        - key: {{ $v.key | quote }}
+          operator: {{ $v.operator | quote }}
+          value: {{ $v.value | quote }}
+          effect: {{ $v.effect | quote }}
+        {{- end }}
+
+      volumes:
+      {{- range $v := .Values.deployment.volumes }}
+      - name: {{ $v.name }}
+        persistentVolumeClaim:
+          claimName: {{ $v.persistentVolumeClaimName }}
+      {{- end }}
+
+      containers:
+      - name: {{ .Values.deployment.container.name }}
+        image: {{ .Values.deployment.container.image}}:{{ .Values.deployment.container.tag }}
+        imagePullPolicy: {{ .Values.deployment.container.pullPolicy }}
+
+        volumeMounts:
+          {{- range $v := .Values.deployment.container.volumeMounts }}
+          - mountPath: {{ $v.mountPath }}
+            name: {{ $v.name }}
+            readOnly: false
+          {{- end }}
+
+        resources:
+          limits:
+            memory: {{ .Values.deployment.container.resources.limits.memory | quote }}
+            cpu: {{ .Values.deployment.container.resources.limits.cpu | quote }}
+        ports:
+        - containerPort: {{ .Values.deployment.container.port }}
+        

@@ -1,0 +1,56 @@
+# Default values for chart-booking-service.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+namespace: booking-service
+
+service:
+  name: booking-service
+  portMaps:
+    - port: 5000
+      targetPort: 5000
+  podSelectors:
+    - key: app
+      value: booking-service
+
+deployment:
+  replicaCount: 3
+  
+  matchLabels:
+    - key: 'app'
+      value: 'booking-service'
+
+  tolerations:
+    - key: "os"
+      operator: "Equal"
+      value: "linux"
+      effect: "NoSchedule"
+  
+  volumes:
+    - name: azfile-logs
+      persistentVolumeClaimName: pvc-azfile-logs
+
+  container:
+    name: "booking-service"
+    image: acrappsaks.azurecr.io/booking-service
+    pullPolicy: Always
+    port: 5000
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: "v0.1.0"
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+
+    volumeMounts:
+      - name: azfile-logs
+        mountPath: "/app/logs"
+
+pvAzFileLog:
+  name: pv-azfile-logs
+  resourceGroup: rg-k8s-learning 
+  shareName: fs-logs
+  secretRefName: azure-storage-fileshare-log-accesskey
+
+pvcAzFileLog:
+  name: pvc-azfile-logs
