@@ -1,0 +1,20 @@
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: Gateway
+metadata:
+  name: internal-lb-gateway-handymancan
+  namespace: istio-ingress
+  annotations:
+    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+    service.beta.kubernetes.io/azure-load-balancer-health-probe-request-path: "/healthz/ready"
+    service.beta.kubernetes.io/port_80_health-probe_protocol: http
+    service.beta.kubernetes.io/port_80_health-probe_port: "15021" # envoy listening on 15021
+spec:
+  gatewayClassName: istio
+  listeners:
+  - name: default
+    hostname: "*.handymancan.com"
+    port: 80
+    protocol: HTTP
+    allowedRoutes:
+      namespaces:
+        from: All
