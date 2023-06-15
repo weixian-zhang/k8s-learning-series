@@ -11,6 +11,7 @@ spec:
   ports:
     {{- range $v := .Values.service.portMaps }}
     - name: {{ $v.name }}
+      protocol: {{ $v.protocol }}
       port: {{ $v.port }}
       targetPort: {{ $v.targetPort }}
       

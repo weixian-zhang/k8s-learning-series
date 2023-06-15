@@ -4,6 +4,9 @@ from dto import Booking
 from loguru import logger
 from dotenv import load_dotenv
 import os
+from faker import Faker
+
+faker = Faker()
 
 #load config from .env
 load_dotenv()
@@ -21,12 +24,12 @@ def health():
     }
 
 
-@app.route('/bookings')
+@app.route('/list')
 def list_bookings():
     bookings = [
-        Booking('Pete', 'all sorts of repair work'),
-        Booking('Harry', 'all sorts of repair work'),
-        Booking('Sonya', 'all sorts of repair work'),
+        Booking(faker.name(), 'all sorts of repair work'),
+        Booking(faker.name(), 'all sorts of repair work'),
+        Booking(faker.name(), 'all sorts of repair work'),
     ]
     bookingsJson = jsonpickle.dumps(bookings, unpicklable=False)
     

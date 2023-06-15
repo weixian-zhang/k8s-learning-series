@@ -9,12 +9,23 @@
             "command": "docker build -t acrappsaks.azurecr.io/booking-service:v0.1.0 .",
             "options": {
                 "cwd": "${workspaceFolder}/src/booking_service/src"
-            }
+            },
+            "dependsOn": [
+                "pip freeze booking"
+            ]
         },
         {
             "label": "docker push booking service",
             "type": "shell",
             "command": "docker push acrappsaks.azurecr.io/booking-service:v0.1.0",
+            "options": {
+                "cwd": "${workspaceFolder}/src/booking_service/src"
+            }
+        },
+        {
+            "label": "pip freeze booking",
+            "type": "shell",
+            "command": "pip freeze -> requireements.txt",
             "options": {
                 "cwd": "${workspaceFolder}/src/booking_service/src"
             }
