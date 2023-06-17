@@ -2,7 +2,7 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: cert-myhandymanpronet
-  namespace: istio-system
+  namespace: cert-manager
 spec:
   secretName: cert-myhandymanpronet
   duration: 2160h # 90d
@@ -14,8 +14,8 @@ spec:
   usages:
     - server auth
     - client auth
+  commonName: apis.myhandymanpro.net
   dnsNames:
-  - "kiali.myhandymanpro.net"
   - "apis.myhandymanpro.net"
   # Issuer references are always required.
   issuerRef:

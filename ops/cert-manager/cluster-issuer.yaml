@@ -2,7 +2,7 @@ apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
  name: certissuer-letsencrypt
- namespace: istio-system
+ namespace: cert-manager
 spec:
  acme:
   server: https://acme-staging-v02.api.letsencrypt.org/directory #https://acme-v02.api.letsencrypt.org/directory
@@ -17,4 +17,4 @@ spec:
           subscriptionID: ee611083-4581-4ba1-8116-a502d4539206
           environment: AzurePublicCloud
           managedIdentity:
-            clientID: 47c5e7af-f537-49c9-9a6a-851b881a4d4e
+            clientID: 6e76ffcd-5324-475d-a291-a2158e69cc65

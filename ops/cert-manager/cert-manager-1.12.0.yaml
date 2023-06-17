@@ -4497,6 +4497,8 @@ automountServiceAccountToken: true
 metadata:
   name: cert-manager-cainjector
   namespace: cert-manager
+  annotations:
+    azure.workload.identity/client-id: "6e76ffcd-5324-475d-a291-a2158e69cc65"
   labels:
     azure.workload.identity/use: "true"
     app: cainjector
@@ -4512,8 +4514,9 @@ automountServiceAccountToken: true
 metadata:
   name: cert-manager
   namespace: cert-manager
+  annotations:
+    azure.workload.identity/client-id: "6e76ffcd-5324-475d-a291-a2158e69cc65"
   labels:
-    azure.workload.identity/use: "true"
     app: cert-manager
     app.kubernetes.io/name: cert-manager
     app.kubernetes.io/instance: cert-manager
@@ -4527,6 +4530,8 @@ automountServiceAccountToken: true
 metadata:
   name: cert-manager-webhook
   namespace: cert-manager
+  annotations:
+    azure.workload.identity/client-id: "6e76ffcd-5324-475d-a291-a2158e69cc65"
   labels:
     azure.workload.identity/use: "true"
     app: webhook

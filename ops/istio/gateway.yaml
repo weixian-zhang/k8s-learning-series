@@ -22,19 +22,20 @@ spec:
     #  tls:
     #   httpsRedirect: true
 
-   - name: https-kiali
-     hostname: "kiali.myhandymanpro.net"
-     port: 443
-     protocol: HTTPS
-     allowedRoutes:
-      namespaces:
-        from: All
-     tls:
-        mode: Terminate # ✅ Required. "Terminate" is the only supported mode.
-        certificateRefs:
-          - name: cert-myhandymanpronet # ✅ Required.
-            kind: Secret  # ✅ Required. "Secret" is the only valid value.
-            group: "" # ✅ Required. "core" is the only valid value.
+  #  - name: https-kiali
+  #    hostname: "kiali.myhandymanpro.net"
+  #    port: 443
+  #    protocol: HTTPS
+  #    allowedRoutes:
+  #     namespaces:
+  #       from: All
+  #    tls:
+  #       mode: Terminate # ✅ Required. "Terminate" is the only supported mode.
+  #       certificateRefs:
+  #         - name: cert-myhandymanpronet # ✅ Required.
+  #           namespace: istio-system
+  #           kind: Secret  # ✅ Required. "Secret" is the only valid value.
+  #           group: core # ✅ Required. "core" is the only valid value.
 
    - name: http-apis
      hostname: "apis.myhandymanpro.net"
@@ -54,12 +55,10 @@ spec:
      allowedRoutes:
       namespaces:
         from: All
-      kinds:
-        - group: gateway.networking.k8s.io
-          kind: HTTPRoute
      tls:
         mode: Terminate # ✅ Required. "Terminate" is the only supported mode.
         certificateRefs:
           - name: cert-myhandymanpronet # ✅ Required.
+            namespace: cert-manager
             kind: Secret  # ✅ Required. "Secret" is the only valid value.
             group: "" # ✅ Required. "core" is the only valid value.
