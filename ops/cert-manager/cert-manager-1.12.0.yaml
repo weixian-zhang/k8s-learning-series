@@ -5408,6 +5408,8 @@ spec:
           - --leader-election-namespace=kube-system
           - --acme-http01-solver-image=quay.io/jetstack/cert-manager-acmesolver:v1.12.0
           - --max-concurrent-challenges=60
+          - --dns01-recursive-nameservers-only
+          - --dns01-recursive-nameservers=ns1-09.azure-dns.com:53,ns2-09.azure-dns.net:53,ns3-09.azure-dns.org:53,ns4-09.azure-dns.info:53
           ports:
           - containerPort: 9402
             name: http-metrics

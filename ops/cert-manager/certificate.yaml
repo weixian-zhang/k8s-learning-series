@@ -1,22 +1,21 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: cert-myhandymanpronet
-  namespace: cert-manager
+  name: myhandymanpronet
+  namespace: istio-system
 spec:
-  secretName: cert-myhandymanpronet
-  duration: 2160h # 90d
-  renewBefore: 360h # 15d
-  privateKey:
-    algorithm: RSA
-    encoding: PKCS1
-    size: 2048
-  usages:
-    - server auth
-    - client auth
-  commonName: apis.myhandymanpro.net
+  secretName: myhandymanpronet
+  # duration: 2160h # 90d
+  # renewBefore: 360h # 15d
+  # privateKey:
+  #   algorithm: RSA
+  #   encoding: PKCS1
+  #   size: 2048
+  # usages:
+  #   - server auth
+    # - client auth
   dnsNames:
-  - "apis.myhandymanpro.net"
+  - apis.myhandymanpro.net
   # Issuer references are always required.
   issuerRef:
     name: certissuer-letsencrypt
