@@ -1,0 +1,76 @@
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: Gateway
+metadata:
+  name: internal-lb-gateway-core
+  namespace: istio-system
+  annotations:
+    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+    service.beta.kubernetes.io/azure-load-balancer-health-probe-request-path: "/healthz/ready"
+    service.beta.kubernetes.io/port_80_health-probe_protocol: http
+    service.beta.kubernetes.io/port_80_health-probe_port: "15021" # envoy listening on 15021
+    service.beta.kubernetes.io/port_443_health-probe_protocol: http
+    service.beta.kubernetes.io/port_443_health-probe_port: "15021" # envoy listening on 15021
+    cert-manager.io/issuer: certissuer-letsencrypt
+  labels:
+    
+spec:
+  gatewayClassName: istio
+  listeners:
+   
+  #  - name: http-kiali
+  #    hostname: "kiali.myhandymanpro.net"
+  #    port: 80
+  #    protocol: HTTP
+  #    allowedRoutes:
+  #     namespaces:
+  #       from: All
+    #  tls:
+    #   httpsRedirect: true
+
+  #  - name: https-kiali
+  #    hostname: "kiali.myhandymanpro.net"
+  #    port: 443
+  #    protocol: HTTPS
+  #    allowedRoutes:
+  #     namespaces:
+  #       from: All
+  #    tls:
+  #       mode: Terminate # ✅ Required. "Terminate" is the only supported mode.
+  #       certificateRefs:
+  #         - name: myhandymanpronet # ✅ Required.
+  #           namespace: istio-system
+  #           kind: Secret  # ✅ Required. "Secret" is the only valid value.
+  #           group: core # ✅ Required. "core" is the only valid value.
+
+   - name: http-apis
+     hostname: "apis.myhandymanpro.net"
+     port: 80
+     protocol: HTTP
+     allowedRoutes:
+      namespaces:
+        from: All
+  #    tls:
+  #     httpsRedirect: true
+  #     kinds:
+  #       - group: gateway.networking.k8s.io
+  #         kind: HTTPRoute
+
+   - name: https-apis
+     port: 443
+     hostname: apis.myhandymanpro.net
+     protocol: HTTPS
+     tls:
+      mode: Terminate
+      certificateRefs:
+        - name: myhandymanpronet
+     allowedRoutes:
+      namespaces:
+          from: All
+    #  tls:
+    #     mode: Terminate # ✅ Required. "Terminate" is the only supported mode.
+    #     certificateRefs:
+    #       - name: myhandymanpronet
+    #         namespace: istio-system
+    #         kind: Secret  # ✅ Required. "Secret" is the only valid value.
+    #         group: core # ✅ Required. "core" is the only valid value.
+    

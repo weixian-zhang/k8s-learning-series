@@ -7,7 +7,9 @@ namespace: booking-service
 service:
   name: booking-service
   portMaps:
-    - port: 5000
+    - name: http
+      protocol: TCP
+      port: 5000
       targetPort: 5000
   podSelectors:
     - key: app

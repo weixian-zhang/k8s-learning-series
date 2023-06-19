@@ -1,0 +1,20 @@
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+ name: certissuer-letsencrypt
+ namespace: istio-system
+spec:
+ acme:
+  server: https://acme-v02.api.letsencrypt.org/directory #https://acme-staging-v02.api.letsencrypt.org/directory 
+  email: wxztechpass@outlook.com
+  privateKeySecretRef:
+    name: certissuer-letsencrypt
+  solvers:
+    - dns01:
+        azureDNS:
+          hostedZoneName: myhandymanpro.net
+          resourceGroupName: rg-k8s-learning
+          subscriptionID: ee611083-4581-4ba1-8116-a502d4539206
+          environment: AzurePublicCloud
+          managedIdentity:
+            clientID: 6e76ffcd-5324-475d-a291-a2158e69cc65

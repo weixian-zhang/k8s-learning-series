@@ -1,0 +1,9 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: pdb-istio-ingress-gateway
+spec:
+  minAvailable: 50%
+  selector:
+    matchLabels:
+      istio.io/gateway-name: internal-lb-gateway-core
