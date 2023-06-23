@@ -4,8 +4,25 @@
 
 namespace: booking-service
 
+httproute:
+  name: httproute-booking-service-tracker
+  parentRefs:
+    - name: internal-lb-gateway-core
+      namespace: istio-system
+  hostnames:
+    - name: apis.myhandymanpro.net
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /bookings
+      # https://gateway-api.sigs.k8s.io/references/spec/#gateway.networking.k8s.io/v1beta1.HTTPPathModifier
+    backendRefs:
+    - name: svc-booking-service
+      port: 5000
+
 service:
-  name: booking-service
+  name: svc-booking-service
   portMaps:
     - name: http
       protocol: TCP
