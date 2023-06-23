@@ -15,19 +15,18 @@ spec:
     {{- end }}
 
   rules:
-  {{- range $v := .Values.httproute.rules }}
-  - matches:
-    {{- range $v.matches }}
-    - path:
-        type: {{ .path.type }}
-        value: {{ .path.value }}
+    {{- range $v := .Values.httproute.rules }}
+    - matches:
+      {{- range $v.matches }}
+      - path:
+          type: {{ .path.type }}
+          value: {{ .path.value }}
+      {{- end }}
+      backendRefs:
+      {{- range $v.backendRefs }}
+      - name: {{ .name }}
+        port: {{ .port }}
+      {{- end }}
     {{- end }}
-    backendRefs:
-    {{- range $v.backendRefs }}
-    - name: {{ .name }}
-      port: {{ .port }}
-    {{- end }}
-  {{- end }}
-
 
 

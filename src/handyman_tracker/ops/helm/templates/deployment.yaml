@@ -18,7 +18,8 @@ spec:
     spec:
       containers:
       - name: {{ .Values.deployment.name }}
-        image: {{ .Values}}
+        image: {{ .Values.deployment.image}}
+        imagePullPolicy: Always
         resources:
           limits:
             memory: {{ .Values.deployment.limits.memory }}

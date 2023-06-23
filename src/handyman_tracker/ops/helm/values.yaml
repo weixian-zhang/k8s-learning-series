@@ -11,12 +11,13 @@ httproute:
   - matches:
     - path:
         type: PathPrefix
-        value: /
-    - path:
-        type: PathPrefix
-        value: /list
+        value: /handymantracker
+      # https://gateway-api.sigs.k8s.io/references/spec/#gateway.networking.k8s.io/v1beta1.HTTPPathModifier
+      filters:
+      - urlRewrite:
+          replacePrefixMatch: /
     backendRefs:
-    - name: svc-booking-service
+    - name: svc-handymantracker
       port: 5000
 
 
@@ -41,9 +42,9 @@ hpa:
 deployment:
   name: handyman-tracker
   labels:
-    - key: 'app'
-      value: 'handyman-tracker'
-  image: 'acrappsaks.azurecr.io/handyman-tracker:v0.1.0'
+    - key: app
+      value: handyman-tracker
+  image: acrappsaks.azurecr.io/handyman-tracker:v0.1.0
   limits:
     memory: "128Mi"
     cpu: "500m"

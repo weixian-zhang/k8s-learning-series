@@ -17,10 +17,20 @@
         {
             "label": "docker push booking service",
             "type": "shell",
-            "command": "docker push acrappsaks.azurecr.io/booking-service:v0.1.0",
+            "command": "docker push acrappsaks.azurecr.io/booking-service:v0.1.0"
+        },
+        {
+            "label": "docker build handyman tracker",
+            "type": "shell",
+            "command": "docker build -t acrappsaks.azurecr.io/handyman-tracker:v0.1.0 .",
             "options": {
-                "cwd": "${workspaceFolder}/src/booking_service/src"
+                "cwd": "${workspaceFolder}/src/handyman_tracker"
             }
+        },
+        {
+            "label": "docker push handyman tracker",
+            "type": "shell",
+            "command": "docker push acrappsaks.azurecr.io/handyman-tracker:v0.1.0"
         },
         {
             "label": "pip freeze booking",
