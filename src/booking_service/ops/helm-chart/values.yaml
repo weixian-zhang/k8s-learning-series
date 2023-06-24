@@ -16,7 +16,13 @@ httproute:
     - path:
         type: PathPrefix
         value: /bookings
-      # https://gateway-api.sigs.k8s.io/references/spec/#gateway.networking.k8s.io/v1beta1.HTTPPathModifier
+        
+    filters:
+      type: UrlRewrite
+      urlRewrite:
+        type: ReplacePrefixMatch
+        replacePrefixMatch: /
+
     backendRefs:
     - name: svc-booking-service
       port: 5000

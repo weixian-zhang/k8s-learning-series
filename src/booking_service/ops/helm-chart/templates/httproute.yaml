@@ -14,11 +14,20 @@ spec:
     - {{ $v.name }}
     {{- end }}
   rules:
-    - filters:
-      - type: URLRewrite
-        urlRewrite:
-          hostname: elsewhere.example
+    {{- range $v := .Values.httproute.rules }}
+    - matches:
+
+      {{- range $v.matches }}
+      - path:
+          type: {{ .path.type }}
+          value: {{ .path.value }}
+      {{- end }}
+
+      {{ template "httproute.filters" . }}
+
       backendRefs:
-      - name: example-svc
-        weight: 1
-        port: 80
+      {{- range $v.backendRefs }}
+      - name: {{ .name }}
+        port: {{ .port }}
+      {{- end }}
+    {{- end }}

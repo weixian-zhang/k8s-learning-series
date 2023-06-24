@@ -12,10 +12,15 @@ httproute:
     - path:
         type: PathPrefix
         value: /handymantracker
-      # https://gateway-api.sigs.k8s.io/references/spec/#gateway.networking.k8s.io/v1beta1.HTTPPathModifier
-      filters:
-      - urlRewrite:
-          replacePrefixMatch: /
+
+      # https://gateway-api.sigs.k8s.io/guides/http-redirect-rewrite/
+
+    filters:
+      type: UrlRewrite
+      urlRewrite:
+        type: ReplacePrefixMatch
+        replacePrefixMatch: /
+        
     backendRefs:
     - name: svc-handymantracker
       port: 5000

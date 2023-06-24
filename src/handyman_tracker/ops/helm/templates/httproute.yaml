@@ -17,11 +17,15 @@ spec:
   rules:
     {{- range $v := .Values.httproute.rules }}
     - matches:
+
       {{- range $v.matches }}
       - path:
           type: {{ .path.type }}
           value: {{ .path.value }}
       {{- end }}
+
+      {{ template "handymantracker.httproute.filters" . }}
+
       backendRefs:
       {{- range $v.backendRefs }}
       - name: {{ .name }}

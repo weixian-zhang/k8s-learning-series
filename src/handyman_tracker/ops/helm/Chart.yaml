@@ -1,5 +1,5 @@
 apiVersion: v2
-name: handyman-tracker service
+name: handymantracker
 description: A Helm chart for handyman-tracker service
 
 # A chart can be either an 'application' or a 'library' chart.
