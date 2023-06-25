@@ -33,6 +33,11 @@
             "command": "docker push acrappsaks.azurecr.io/handyman-tracker:v0.1.0"
         },
         {
+            "label": "docker build + push handyman tracker",
+            "type": "shell",
+            "command": "docker push acrappsaks.azurecr.io/handyman-tracker:v0.1.0"
+        },
+        {
             "label": "pip freeze booking",
             "type": "shell",
             "command": "pip freeze -> requireements.txt",

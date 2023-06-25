@@ -10,7 +10,7 @@ func startWebServer() {
 
 	app := fiber.New()
 
-	app.Get("/list", func(c *fiber.Ctx) error {
+	app.Get("/handymantracker/list", func(c *fiber.Ctx) error {
 		handymen := hm.NewMany(10)
 
 		return c.JSON(handymen)
