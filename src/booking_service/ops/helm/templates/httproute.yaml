@@ -22,9 +22,6 @@ spec:
           type: {{ .path.type }}
           value: {{ .path.value }}
       {{- end }}
-
-      {{ template "httproute.filters" . }}
-
       backendRefs:
       {{- range $v.backendRefs }}
       - name: {{ .name }}

@@ -17,6 +17,8 @@ logger.add(logFilePath, rotation="10 MB")  # Specify the log file path and rotat
 
 app = Flask(__name__)
 
+handymantracker_url = os.getenv('handymantracker_url')
+
 @app.route('/health')
 def health():
     return {
@@ -24,7 +26,7 @@ def health():
     }
 
 
-@app.route('/list')
+@app.route('/bookings/list')
 def list_bookings():
     bookings = [
         Booking(faker.name(), 'all sorts of repair work'),
@@ -36,6 +38,8 @@ def list_bookings():
     logger.info(f'bookings: {bookingsJson}')
     
     return bookingsJson
+
+
 
 
 if __name__ == '__main__':
