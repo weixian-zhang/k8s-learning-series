@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.configmap.name }}
+  namespace: booking-service
+data:
+  {{- range $k, $v := .Values.configmap.data }}
+  {{ $k }}: {{ $v | quote }}
+  {{- end }}
+  

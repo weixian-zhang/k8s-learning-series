@@ -50,4 +50,9 @@ spec:
             cpu: {{ .Values.deployment.container.resources.limits.cpu | quote }}
         ports:
         - containerPort: {{ .Values.deployment.container.port }}
-        
+
+        envFrom:
+          {{- range $v := .Values.deployment.container.envFrom }}
+          - configMapRef:
+              name: {{ $v.name }}
+          {{- end }}

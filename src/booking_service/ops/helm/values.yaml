@@ -4,6 +4,11 @@
 
 namespace: booking-service
 
+configmap:
+  name: configmap-bookings
+  data:
+    handymantracker_url: https://apis.myhandymanpro.net/handymantracker
+
 httproute:
   name: httproute-booking-service-tracker
   parentRefs:
@@ -70,6 +75,10 @@ deployment:
     volumeMounts:
       - name: azfile-logs
         mountPath: "/app/logs"
+
+    envFrom:
+      - configMapRef:
+        name: configmap-bookings
 
 pvAzFileLog:
   name: pv-azfile-logs
