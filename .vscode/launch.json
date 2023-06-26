@@ -9,7 +9,7 @@
             "type": "go",
             "request": "launch",
             "mode": "auto",
-            "program": "${workspaceFolder}/src/handyman_trackers/src/",
+            "program": "${workspaceFolder}/src/handyman_tracker/src/",
             
             
         }

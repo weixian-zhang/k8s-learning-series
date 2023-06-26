@@ -5,7 +5,7 @@ import (
 	"math/rand"
 )
 
-var skillsetCatelog = []string{"plumbing", "electrical", "carpentry", "painting", "gardening", "housekeeping", "lockpick"}
+var skillsetCatelog = []string{"plumbing", "electrical", "carpentry", "painting", "gardening", "general fixing", "lockpick"}
 
 type Handyman struct {
 	Name     string

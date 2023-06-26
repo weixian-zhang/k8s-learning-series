@@ -5,6 +5,8 @@ from loguru import logger
 from dotenv import load_dotenv
 import os
 from faker import Faker
+import requests
+import dto
 
 faker = Faker()
 
@@ -17,7 +19,7 @@ logger.add(logFilePath, rotation="10 MB")  # Specify the log file path and rotat
 
 app = Flask(__name__)
 
-handymantracker_url = os.getenv('handymantracker_url')
+hmt_url = os.getenv('handymantracker_url')
 
 @app.route('/health')
 def health():
@@ -28,19 +30,28 @@ def health():
 
 @app.route('/bookings/list')
 def list_bookings():
-    bookings = [
-        Booking(faker.name(), 'all sorts of repair work'),
-        Booking(faker.name(), 'all sorts of repair work'),
-        Booking(faker.name(), 'all sorts of repair work'),
-    ]
-    bookingsJson = jsonpickle.dumps(bookings, unpicklable=False)
     
-    logger.info(f'bookings: {bookingsJson}')
+    try: 
+        logger.info('retrieving handyman list from handymantracker service')
+        resp = requests.get(f'{hmt_url}/list')
+        jResult = resp.json()
+    except Exception as e:
+        logger.error(f'error retrieving handyman list from handymantracker service: {str(e)}')
+        return []
+        
+    bookings = []
+    
+    for h in jResult:
+        longlat = faker.latlng()
+        addr = faker.address()
+        booking = Booking(addr, dto.LatLong(float(longlat[0]), float(longlat[1])), faker.date_time(), h)
+        bookings.append(booking)
+        
+        
+    bookingsJson = jsonpickle.dumps(bookings, unpicklable=False)
     
     return bookingsJson
 
 
-
-
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=5001)
