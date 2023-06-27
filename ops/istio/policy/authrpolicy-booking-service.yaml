@@ -1,0 +1,42 @@
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+ name: authrpolicy-inbound-bookings
+ namespace: booking-service
+spec:
+  selector:
+    matchLabels:
+      app: booking-service
+  rules:
+  - from:
+    - source:
+        namespaces: ["istio-system"]
+  - to:
+    - operation:
+        paths: ["/*"]
+        methods: ["*"]
+        ports: ["443"]
+  action: ALLOW
+---
+
+#outbound
+
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+ name: authrpolicy-outbound-bookings
+ namespace: booking-service
+spec:
+  selector:
+    matchLabels:
+      app: booking-service
+  rules:
+  - from:
+    - source:
+        namespaces: ["booking-service"]
+  - to:
+    - operation:
+        paths: ["/*"]
+        methods: ["*"]
+        ports: ["443"]
+  action: ALLOW
