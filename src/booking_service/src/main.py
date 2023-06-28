@@ -36,7 +36,7 @@ def list_bookings():
         resp = requests.get(f'{hmt_url}/list')
         jResult = resp.json()
     except Exception as e:
-        logger.error(f'error retrieving handyman list from handymantracker service: {str(e)}')
+        logger.error(f'error retrieving handyman list from {hmt_url}: {str(e)}')
         return []
         
     bookings = []
