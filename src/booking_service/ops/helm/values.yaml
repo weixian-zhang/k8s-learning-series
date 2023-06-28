@@ -4,8 +4,36 @@
 
 namespace: booking-service
 
+configmap:
+  name: configmap-bookings
+  data:
+    handymantracker_url: https://apis.myhandymanpro.net/handymantracker
+
+httproute:
+  name: httproute-booking-service-tracker
+  parentRefs:
+    - name: internal-lb-gateway-core
+      namespace: istio-system
+  hostnames:
+    - name: apis.myhandymanpro.net
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /bookings
+        
+    filters:
+      type: UrlRewrite
+      urlRewrite:
+        type: ReplacePrefixMatch
+        replacePrefixMatch: /
+
+    backendRefs:
+    - name: svc-booking-service
+      port: 5000
+
 service:
-  name: booking-service
+  name: svc-booking-service
   portMaps:
     - name: http
       protocol: TCP
@@ -47,6 +75,10 @@ deployment:
     volumeMounts:
       - name: azfile-logs
         mountPath: "/app/logs"
+
+    envFrom:
+      - configMapRef:
+        name: configmap-bookings
 
 pvAzFileLog:
   name: pv-azfile-logs

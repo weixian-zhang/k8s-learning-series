@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.deployment.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  selector:
+    matchLabels:
+      {{- range $v := .Values.deployment.labels }}
+       {{ $v.key }}: {{ $v.value | quote }}
+      {{- end }}
+  template:
+    metadata:
+      labels:
+        {{- range $v := .Values.deployment.labels }}
+        {{ $v.key }}: {{ $v.value | quote }}
+        {{- end }}
+    spec:
+      containers:
+      - name: {{ .Values.deployment.name }}
+        image: {{ .Values.deployment.image}}
+        imagePullPolicy: Always
+        resources:
+          limits:
+            memory: {{ .Values.deployment.limits.memory }}
+            cpu: {{ .Values.deployment.limits.cpu }}
+        ports:
+        - containerPort: {{ int .Values.deployment.containerPort }}

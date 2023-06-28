@@ -1,0 +1,58 @@
+namespace: handyman-tracker
+
+httproute:
+  name: httproute-handyname-tracker
+  parentRefs:
+    - name: internal-lb-gateway-core
+      namespace: istio-system
+  hostnames:
+    - name: apis.myhandymanpro.net
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /handymantracker
+    - path:
+        type: PathPrefix
+        value: /handymantracker/
+        
+    backendRefs:
+    - name: svc-handymantracker
+      port: 5000
+
+  # https://gateway-api.sigs.k8s.io/guides/http-redirect-rewrite/
+  filter:
+    type: URLRewrite
+    urlRewrite:
+      type: ReplacePrefixMatch
+      replacePrefixMatch: '/'
+
+
+service:
+  name: svc-handymantracker
+  selector:
+    - key: app
+      value: handyman-tracker
+  ports:
+    - port: 5000
+      targetPort: 5000
+
+
+hpa:
+  name: hpa-handyman-tracker
+  minReplicas: 2
+  maxReplicas: 4
+  metrics:
+    name: cpu
+    averageUtilization: 60
+
+deployment:
+  name: handyman-tracker
+  labels:
+    - key: app
+      value: handyman-tracker
+  image: acrappsaks.azurecr.io/handyman-tracker:v0.1.0
+  limits:
+    memory: "128Mi"
+    cpu: "500m"
+  containerPort: 5000

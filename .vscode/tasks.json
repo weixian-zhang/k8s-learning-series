@@ -17,15 +17,47 @@
         {
             "label": "docker push booking service",
             "type": "shell",
+            "command": "docker push acrappsaks.azurecr.io/booking-service:v0.1.0"
+        },
+        {
+            "label": "docker build + push booking service",
+            "type": "shell",
             "command": "docker push acrappsaks.azurecr.io/booking-service:v0.1.0",
             "options": {
                 "cwd": "${workspaceFolder}/src/booking_service/src"
+            },
+            "dependsOn": [
+                "docker build booking service"
+            ]
+        },
+        {
+            "label": "docker build handyman tracker",
+            "type": "shell",
+            "command": "docker build -t acrappsaks.azurecr.io/handyman-tracker:v0.1.0 .",
+            "options": {
+                "cwd": "${workspaceFolder}/src/handyman_tracker"
             }
+        },
+        {
+            "label": "docker push handyman tracker",
+            "type": "shell",
+            "command": "docker push acrappsaks.azurecr.io/handyman-tracker:v0.1.0"
+        },
+        {
+            "label": "docker build + push handyman tracker",
+            "type": "shell",
+            "command": "docker push acrappsaks.azurecr.io/handyman-tracker:v0.1.0",
+            "options": {
+                "cwd": "${workspaceFolder}/src/handyman_tracker"
+            },
+            "dependsOn": [
+                "docker build handyman tracker"
+            ]
         },
         {
             "label": "pip freeze booking",
             "type": "shell",
-            "command": "pip freeze -> requireements.txt",
+            "command": ".venv/Scripts/Activate.ps1; pip freeze > requirements.txt",
             "options": {
                 "cwd": "${workspaceFolder}/src/booking_service/src"
             }
