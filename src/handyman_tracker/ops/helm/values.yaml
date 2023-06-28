@@ -19,6 +19,7 @@ httproute:
     backendRefs:
     - name: svc-handymantracker
       port: 5000
+      weight: 100
 
   # https://gateway-api.sigs.k8s.io/guides/http-redirect-rewrite/
   filter:

@@ -33,6 +33,7 @@ spec:
       {{- range $v.backendRefs }}
       - name: {{ .name }}
         port: {{ .port }}
+        weight: {{ .weight }}
       {{- end }}
       {{- end }}
       
