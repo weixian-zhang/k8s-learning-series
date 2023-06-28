@@ -10,7 +10,7 @@ spec:
   rules:
   - from:
     - source:
-        namespaces: ["booking-service"]
+        namespaces: ["booking-service", "istio-system"] #allow istio-system due to traffic from Gateway in istio-system
   - to:
     - operation:
         paths: ["/*"]
