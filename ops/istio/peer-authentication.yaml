@@ -5,7 +5,7 @@ metadata:
   namespace: istio-system
 spec:
   mtls:
-    mode: STRICT
+    mode: PERMISSIVE
 ---
 apiVersion: security.istio.io/v1beta1
 kind: PeerAuthentication
@@ -14,7 +14,7 @@ metadata:
   namespace: booking-service
 spec:
   mtls:
-    mode: STRICT
+    mode: PERMISSIVE
 ---
 apiVersion: security.istio.io/v1beta1
 kind: PeerAuthentication
@@ -23,4 +23,4 @@ metadata:
   namespace: handyman-tracker
 spec:
   mtls:
-    mode: STRICT
+    mode: PERMISSIVE
